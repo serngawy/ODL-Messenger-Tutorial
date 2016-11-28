@@ -1,0 +1,57 @@
+module messenger {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:messenger";
+    prefix "messenger";
+
+    revision "2015-01-05" {
+        description "Initial revision of messenger model";
+    }
+
+    grouping messege {
+        leaf mess-id {
+            description "message Id";
+            type string;
+            mandatory true;
+        }
+        leaf text {
+            description "message text";
+            type string;
+        }
+        leaf messege-source {
+            description "messege source";
+            type string;
+        }
+        leaf messege-dest {
+            description "messege dest";
+            type string;
+        }
+    }
+
+    container messenger {
+        leaf id {
+            type string;
+            mandatory true;
+        }
+        leaf connected {
+            description "indicate if the messenger service is connected";
+            type boolean;
+            default true;
+            config false;
+        }
+        leaf last-messege-datetime {
+            type string;
+        }
+        list messege {
+            key mess-id;
+            uses messege;
+        }
+    }
+
+    notification messenger-connection {
+        description
+          "Indicates that the messenger is connected/disconnected.";
+        leaf connected {
+            type boolean;
+        }
+    }
+}
