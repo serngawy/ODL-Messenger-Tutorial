@@ -1,21 +1,17 @@
 # ODL-Messenger-Tutorial
 
-__TOC__
-
-=Overview=
+## Overview
 The following tutorial will breakdown step by step how to create Opendaylight project then we will use Yang to model our Messenger example and generate the abstraction layer of a Messenger to Opendaylight. To be continuo 
 
-====Messenger Parts====
-There are several parts that make up this Messenger step-by-step example. During this example we illustrate how the yang model is providing abstraction for us, and how MD-SAL provides the plumbing (wiring) to hook everything up.
+## Messenger Parts
+There are several parts that make up this Messenger step-by-step example. During this example we illustrate how the yang model is providing abstraction for us, and how MD-SAL provides the plumbing (wiring) to hook everything up. We will define the project structure and the parent pom.xml gathering the different modules we'll build.
+* Part 1 of this example will define the Messenger data model (north-bound interface) and will provide a read-only implementation to retrieve operational data on the Messenger.
+* Part 2 will add and implement a remote procedure call which will allow the user to interact with the operations restconf interface, as well as see status changes to operational data.
+* Part 3 illustrates how a user can modify configuration data via restconf and how our Messenger can listener for those changes. 
+* Part 4
+* Part 5 
 
-*'''Prerequisite''' will define the project structure and the parent pom.xml gathering the different modules we'll build.
-*'''Part 1''' of this example will define the Messenger data model (north-bound interface) and will provide a read-only implementation to retrieve operational data on the Messenger.
-*'''Part 2''' will add and implement a remote procedure call which will allow the user to interact with the operations restconf interface, as well as see status changes to operational data.
-*'''Part 3''' illustrates how a user can modify configuration data via restconf and how our Messenger can listener for those changes. 
-*'''Part 4''' 
-*'''Part 5''' 
-
-= Prerequisites =
+### Prerequisites
 * Java JDK 1.8+
 * Maven 3.3.9+
 
