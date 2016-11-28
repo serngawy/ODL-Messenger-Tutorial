@@ -13,18 +13,19 @@ with the Messenger through the REST APIs and Karaf CLI.
 We assume that you already have java programming skills and you have knowledge of maven and apache karaf.
 If you have leak of knowledge about maven and apache karaf you still can go through the tutorial but we strongly
 recommend increase your knowledge in both subjects. You already have been setup you Opendaylight development
-environment using dev guid at https://wiki.opendaylight.org/view/GettingStarted:Development_Environment_Setup
+environment using dev guid at
+https://wiki.opendaylight.org/view/GettingStarted:Development_Environment_Setup
 
-= Prepare the Project Structure =
+##### Prepare the Project Structure
 The first we want to do is prepare the bundle structure, as such we will be using an archetype generator to create the project skeleton.
 
 create your project with the archetype by typing:
 
 <pre>
 mvn archetype:generate -DarchetypeGroupId=org.opendaylight.controller -DarchetypeArtifactId=opendaylight-startup-archetype \
--DarchetypeRepository=http://nexus.opendaylight.org/content/repositories/<Snapshot-Type>/ \
--DarchetypeCatalog=http://nexus.opendaylight.org/content/repositories/<Snapshot-Type>/archetype-catalog.xml \
--DarchetypeVersion=<Archetype-Version>
+-DarchetypeRepository=http://nexus.opendaylight.org/content/repositories/&lt;Snapshot-Type>/ \
+-DarchetypeCatalog=http://nexus.opendaylight.org/content/repositories/&lt;Snapshot-Type>/archetype-catalog.xml \
+-DarchetypeVersion=&lt;Archetype-Version>
 </pre>
 
 You need to enter the proper <Archetype-Version> and <Snapshot-Type> that depends on the ODL release you want to work in. for example:
@@ -78,55 +79,54 @@ Here is highlighted the important sections of the aggregator pom.xml file:
 The ''pom.xml'' file works as aggregator and defines the parent project, and will declare the modules presented in the structure above:
 
 <pre>
+
 ...
-  <parent>
-    <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent</artifactId>
-    <version>1.7.1-Boron-SR1</version>
-    <relativePath/>
-  </parent>
+    &lt;groupId>org.opendaylight.odlparent&lt;/groupId>
+    &lt;artifactId>odlparent&lt;/artifactId>
+    &lt;version>1.7.1-Boron-SR1&lt;/version>
+    &lt;relativePath/>
+  &lt;/parent>
 ...
-  <groupId>org.opendaylight.Messenger</groupId>
-  <artifactId>Messenger-aggregator</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-  <name>Messenger</name>
-  <packaging>pom</packaging>
+  &lt;groupId>org.opendaylight.Messenger&lt;/groupId>
+  &lt;artifactId>Messenger-aggregator&lt;/artifactId>
+  &lt;version>0.1.0-SNAPSHOT&lt;/version>
+  &lt;name>Messenger&lt;/name>
+  &lt;packaging>pom&lt;/packaging>
 ...
-  <modules>
-    <module>api</module>
-    <module>impl</module>
-    <module>karaf</module>
-    <module>features</module>
-    <module>artifacts</module>
-    <module>cli</module>
-    <module>it</module>
-  </modules>
+  &lt;modules>
+    &lt;module>api&lt;/module>
+    &lt;module>impl&lt;/module>
+    &lt;module>karaf&lt;/module>
+    &lt;module>features&lt;/module>
+    &lt;module>artifacts&lt;/module>
+    &lt;module>cli&lt;/module>
+    &lt;module>it&lt;/module>
+  &lt;/modules>
 ...
 </pre>
 
 The aggregator pom.xml file also include two build plugin to initiate the maven build process
 for the messenger project.
-
 <pre>
 ...
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  &lt;build>
+    &lt;plugins>
+      &lt;plugin>
+        &lt;groupId>org.apache.maven.plugins&lt;/groupId>
+        &lt;artifactId>maven-deploy-plugin&lt;/artifactId>
+        &lt;configuration>
+          &lt;skip>true&lt;/skip>
+        &lt;/configuration>
+      &lt;/plugin>
+      &lt;plugin>
+        &lt;groupId>org.apache.maven.plugins&lt;/groupId>
+        &lt;artifactId>maven-install-plugin&lt;/artifactId>
+        &lt;configuration>
+          &lt;skip>true&lt;/skip>
+        &lt;/configuration>
+      &lt;/plugin>
+    &lt;/plugins>
+  &lt;/build>
 ...
 </pre>
 
@@ -263,12 +263,12 @@ Now we will take a deeper look at the api module POM.xml file. You can see the p
 module is the binding-parent artifact.
 
 <pre>
-  <parent>
-    <groupId>org.opendaylight.mdsal</groupId>
-    <artifactId>binding-parent</artifactId>
-    <version>0.9.1-Boron-SR1</version>
-    <relativePath/>
-  </parent>
+  &lt;parent>
+    &lt;groupId>org.opendaylight.mdsal&lt;/groupId>
+    &lt;artifactId>binding-parent&lt;/artifactId>
+    &lt;version>0.9.1-Boron-SR1&lt;/version>
+    &lt;relativePath/>
+  &lt;/parent>
 </pre>
 
 The binding-parent artifact has the yangtool plugin code generator that will read all the yang
@@ -293,9 +293,12 @@ messenger notification to Opendaylight global notification service.
 
 for more details info about the yangtool, yang-to-java mapping and md-sal binding check the following
 links:
+
+<pre>
 https://wiki.opendaylight.org/view/YANG_Tools:YANG_to_Java_Mapping
 https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:MD-SAL_Document_Review:MD_SAL#HOW_DOES_IT_WORK.3F
 https://wiki.opendaylight.org/view/YANG_Tools:Available_Models
+</pre>
 
 ## Implementation
 Initially when you build the messenger project the impl module will have the MessengerProvider class
@@ -310,15 +313,15 @@ and delete the messenger datatree in both Md-SAL datastores operational and conf
 </pre>
 
 <pre>
-  <reference id="dataBroker"
+  &lt;reference id="dataBroker"
     interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
     odl:type="default" />
 
-  <bean id="provider"
+  &lt;bean id="provider"
     class="org.opendaylight.messenger.impl.MessengerProvider"
     init-method="init" destroy-method="close">
-    <argument ref="dataBroker" />
-  </bean>
+    &lt;argument ref="dataBroker" />
+  &lt;/bean>
 </pre>
 
 In our final implementation for the messenger project we have add three classes to help us
@@ -339,13 +342,13 @@ messenger notification listener and we defined our implementation of the messeng
 rpc-implementation tag.
 
 <pre>
-  <reference id="notificationService"
+  &lt;reference id="notificationService"
        interface="org.opendaylight.controller.md.sal.binding.api.NotificationService"/>
-  <bean id="messengerRPC"
+  &lt;bean id="messengerRPC"
     class="org.opendaylight.messenger.impl.MessengerService">
-    <argument ref="provider" />
-  </bean>
-  <odl:rpc-implementation ref="messengerRPC"/>
+    &lt;argument ref="provider" />
+  &lt;/bean>
+  &lt;odl:rpc-implementation ref="messengerRPC"/>
 </pre>
 
 <pre>
@@ -404,7 +407,7 @@ test-command to notify the messenger change its status connected/disconnected. A
 we refer to the NotificationPublishService to be able to send a notification to the messenger based on
 the desired status we want.
 <pre>
-    <reference id="notificationService"
+    &lt;reference id="notificationService"
        interface="org.opendaylight.controller.md.sal.binding.api.NotificationPublishService"/>
 </pre>
 
@@ -458,27 +461,31 @@ feature:install odl-messenger-cli
 Now open a new terminal to communicate with the messenger via the REST APIs. We will retrive the
 data tree of the messenger from both config and operational datastores. use the following commands
 * for config datastore:
+<pre>
 curl -X GET -H "Authorization: Basic YWRtaW46YWRtaW4=" -H "Cache-Control: no-cache" "http://localhost:8181/restconf/config/messenger:messenger"
+</pre>
 output should be:
-
+<pre>
 {
   "messenger": {
     "id": "Messenger:1"
   }
 }
-
+</pre>
 * for operational datastore:
+<pre>
 curl -X GET -H "Authorization: Basic YWRtaW46YWRtaW4=" -H "Cache-Control: no-cache" "http://localhost:8181/restconf/operational/messenger:messenger"
-
+</pre>
 output should be:
-
+<pre>
 {
   "messenger": {
     "id": "Messenger:1"
   }
 }
-
+</pre>
 We will use the send-message RPC to send a message using our messenger.
+<pre>
 curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Basic YWRtaW46YWRtaW4=" -H "Cache-Control: no-cache" -d '{
     "input": {
         "mess-id": "11",
@@ -487,18 +494,18 @@ curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" -
         "message-dest": "192.168.1.15"
     }
 }' "http://localhost:8181/restconf/operations/messenger-rpc:send-message"
-
+</pre>
 output should be:
-
+<pre>
 {
   "output": {
     "message-id": "11"
   }
 }
-
+</pre>
 Now use the previous two command to retrive the messenger datatree from config and operational datastores
 * for config datastore output should be:
-
+<pre>
 {
   "messenger": {
     "id": "Messenger:1",
@@ -512,9 +519,9 @@ Now use the previous two command to retrive the messenger datatree from config a
     ]
   }
 }
-
+</pre>
 * for operational datastore output should be:
-
+<pre>
 {
   "messenger": {
     "id": "Messenger:1",
@@ -530,7 +537,7 @@ Now use the previous two command to retrive the messenger datatree from config a
     ]
   }
 }
-
+</pre>
 As you can see the operational datastore has the connected attribute and the config datastore
 data does not have it.
 
@@ -541,7 +548,7 @@ messenger:test-command -tA disconnect
 </pre>
 
 Try to retrive the messenger operational datastore data it should be like that:
-
+<pre>
 {
   "messenger": {
     "id": "Messenger:1",
@@ -557,6 +564,6 @@ Try to retrive the messenger operational datastore data it should be like that:
     ]
   }
 }
-
+</pre>
 Now if you tried to send a new message using the send-message RPC it should fail as the messenger
 is disconnected.
