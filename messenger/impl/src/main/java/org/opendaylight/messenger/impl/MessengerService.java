@@ -10,12 +10,12 @@ package org.opendaylight.messenger.impl;
 
 import java.util.concurrent.Future;
 
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.GetLastMessegeDatetimeOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.GetLastMessegeDatetimeOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.GetLastMessageDatetimeOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.GetLastMessageDatetimeOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.MessengerRpcService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessegeInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessegeOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessegeOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessageInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessageOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rpc.rev150105.SendMessageOutputBuilder;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 
@@ -31,29 +31,29 @@ public class MessengerService implements MessengerRpcService {
     }
 
     @Override
-    public Future<RpcResult<GetLastMessegeDatetimeOutput>> getLastMessegeDatetime() {
-        final String messDatetime = messProv.getlastMessegeDatatime();
+    public Future<RpcResult<GetLastMessageDatetimeOutput>> getLastMessageDatetime() {
+        final String messDatetime = messProv.getlastMessageDatatime();
         if (messDatetime != null && !messDatetime.isEmpty()) {
-            final GetLastMessegeDatetimeOutput messOutput = new GetLastMessegeDatetimeOutputBuilder()
-                                                        .setMessegeDatetime(messDatetime)
+            final GetLastMessageDatetimeOutput messOutput = new GetLastMessageDatetimeOutputBuilder()
+                                                        .setMessageDatetime(messDatetime)
                                                         .build();
-            return Futures.immediateFuture(RpcResultBuilder.<GetLastMessegeDatetimeOutput> success(messOutput).build());
+            return Futures.immediateFuture(RpcResultBuilder.<GetLastMessageDatetimeOutput> success(messOutput).build());
         } else {
-            return Futures.immediateFuture(RpcResultBuilder.<GetLastMessegeDatetimeOutput> failed().build());
+            return Futures.immediateFuture(RpcResultBuilder.<GetLastMessageDatetimeOutput> failed().build());
         }
     }
 
     @Override
-    public Future<RpcResult<SendMessegeOutput>> sendMessege(SendMessegeInput input) {
-        final SettableFuture<RpcResult<SendMessegeOutput>> futureResult = SettableFuture.create();
-        if (messProv.sendMessege(input.getMessId(), input.getMessegeSource(),
-                input.getMessegeDest(), input.getText())) {
-            final SendMessegeOutput messOutput = new SendMessegeOutputBuilder()
-                                                        .setMessegeId(input.getMessId())
+    public Future<RpcResult<SendMessageOutput>> sendMessage(SendMessageInput input) {
+        final SettableFuture<RpcResult<SendMessageOutput>> futureResult = SettableFuture.create();
+        if (messProv.sendMessage(input.getMessId(), input.getMessageSource(),
+                input.getMessageDest(), input.getText())) {
+            final SendMessageOutput messOutput = new SendMessageOutputBuilder()
+                                                        .setMessageId(input.getMessId())
                                                         .build();
-            futureResult.set(RpcResultBuilder.<SendMessegeOutput> success(messOutput).build());
+            futureResult.set(RpcResultBuilder.<SendMessageOutput> success(messOutput).build());
         } else {
-            futureResult.set(RpcResultBuilder.<SendMessegeOutput> failed().build());
+            futureResult.set(RpcResultBuilder.<SendMessageOutput> failed().build());
         }
         return futureResult;
     }

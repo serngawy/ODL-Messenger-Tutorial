@@ -9,24 +9,24 @@ module messenger-rpc {
 
     import messenger { prefix "messenger"; revision-date "2015-01-05"; }
 
-    rpc send-messege {
+    rpc send-message {
         description
-            "Get messeges sent by the given source";
+            "Send a message";
         input {
-            uses messenger:messege;
+            uses messenger:message;
         }
         output {
-            leaf messege-id {
+            leaf message-id {
                 type string;
             }
         }
     }
 
-    rpc get-last-messege-datetime {
+    rpc get-last-message-datetime {
         description
-            "Get datetime of last messege";
+            "Get datetime of last message";
         output {
-            leaf messege-datetime {
+            leaf message-datetime {
                 type string;
             }
         }

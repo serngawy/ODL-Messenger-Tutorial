@@ -15,8 +15,8 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.Messenger;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Messege;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessegeKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Message;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessageKey;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -39,12 +39,12 @@ public class MessengerMdsalUtils {
         return InstanceIdentifier.builder(Messenger.class).build();
     }
 
-    public static InstanceIdentifier<Messege> getMessegeIid() {
-        return InstanceIdentifier.builder(Messenger.class).build().child(Messege.class);
+    public static InstanceIdentifier<Message> getMessageIid() {
+        return InstanceIdentifier.builder(Messenger.class).build().child(Message.class);
     }
 
-    public static InstanceIdentifier<Messege> getMessegeIid(final MessegeKey messKey) {
-        return InstanceIdentifier.create(Messenger.class).child(Messege.class, messKey);
+    public static InstanceIdentifier<Message> getMessageIid(final MessageKey messKey) {
+        return InstanceIdentifier.create(Messenger.class).child(Message.class, messKey);
     }
 
     /**

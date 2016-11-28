@@ -7,7 +7,7 @@ module messenger {
         description "Initial revision of messenger model";
     }
 
-    grouping messege {
+    grouping message {
         leaf mess-id {
             description "message Id";
             type string;
@@ -17,12 +17,12 @@ module messenger {
             description "message text";
             type string;
         }
-        leaf messege-source {
-            description "messege source";
+        leaf message-source {
+            description "message source";
             type string;
         }
-        leaf messege-dest {
-            description "messege dest";
+        leaf message-dest {
+            description "message dest";
             type string;
         }
     }
@@ -38,18 +38,18 @@ module messenger {
             default true;
             config false;
         }
-        leaf last-messege-datetime {
+        leaf last-message-datetime {
             type string;
         }
-        list messege {
+        list message {
             key mess-id;
-            uses messege;
+            uses message;
         }
     }
 
     notification messenger-connection {
         description
-          "Indicates that the messenger is connected/disconnected.";
+          "Notify the messenger to be connected or disconnected.";
         leaf connected {
             type boolean;
         }

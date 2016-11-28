@@ -8,9 +8,7 @@
 
 package org.opendaylight.messenger.impl;
 
-import java.util.Date;
 import java.util.List;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -18,9 +16,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenge
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.MessengerBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.MessengerConnection;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.MessengerListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Messege;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessegeBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessegeKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Message;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessageBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.MessageKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,14 +26,14 @@ public class MessengerProvider implements MessengerListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(MessengerProvider.class);
     private static final String MESSENGER_DATA_TREE = "Messenger:1";
-    private final MessegeDataTreeChangeListener datatree;
+    private final MessageDataTreeChangeListener datatree;
 
     private final DataBroker dataBroker;
 
     public MessengerProvider(final DataBroker dataBroker, final NotificationService notificationSrv) {
         this.dataBroker = dataBroker;
         notificationSrv.registerNotificationListener(this);
-        datatree = new MessegeDataTreeChangeListener(dataBroker);
+        datatree = new MessageDataTreeChangeListener(dataBroker);
     }
 
     /**
@@ -66,15 +64,15 @@ public class MessengerProvider implements MessengerListener {
         }
     }
 
-    public String getlastMessegeDatatime() {
+    public String getlastMessageDatatime() {
         final Messenger messenger = MessengerMdsalUtils.read(dataBroker, LogicalDatastoreType.OPERATIONAL, MessengerMdsalUtils.getMessengerIid());
-        return messenger.getLastMessegeDatetime();
+        return messenger.getLastMessageDatetime();
     }
 
-    public String getMessege(String messegeId) {
+    public String getMessage(String MessageId) {
         final Messenger messenger = MessengerMdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessengerIid());
-        for (Messege mess : messenger.getMessege()) {
-            if (mess.getMessId().equals(messegeId)) {
+        for (Message mess : messenger.getMessage()) {
+            if (mess.getMessId().equals(MessageId)) {
                 return mess.getText();
             }
         }
@@ -86,20 +84,24 @@ public class MessengerProvider implements MessengerListener {
         return messenger.isConnected();
     }
 
-    public List<Messege> getMesseges() {
+    public List<Message> getMessages() {
         final Messenger messenger = MessengerMdsalUtils.read(dataBroker, LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessengerIid());
-        return messenger.getMessege();
+        return messenger.getMessage();
     }
 
-    public boolean sendMessege(String id, String source, String dest, String txt) {
-        final MessegeKey messKey = new MessegeKey(id);
-        final Messege mess = new MessegeBuilder().setKey(messKey)
-                                    .setMessegeDest(dest)
-                                    .setMessegeSource(source)
-                                    .setMessId(id)
-                                    .setText(txt)
-                                    .build();
-        return MessengerMdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessegeIid(messKey), mess);
+    public boolean sendMessage(String id, String source, String dest, String txt) {
+        if (isConnected()) {
+            final MessageKey messKey = new MessageKey(id);
+            final Message mess = new MessageBuilder().setKey(messKey)
+                                        .setMessageDest(dest)
+                                        .setMessageSource(source)
+                                        .setMessId(id)
+                                        .setText(txt)
+                                        .build();
+            return MessengerMdsalUtils.put(dataBroker, LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessageIid(messKey), mess);
+        }
+        LOG.info("Messenger has been disconnected");
+        return false;
     }
 
     @Override

@@ -18,28 +18,28 @@ import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
 import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.Messenger;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Messege;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.messenger.Message;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.messenger.rev150105.MessengerBuilder;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
-public class MessegeDataTreeChangeListener implements DataTreeChangeListener<Messege>, AutoCloseable {
+public class MessageDataTreeChangeListener implements DataTreeChangeListener<Message>, AutoCloseable {
 
     protected final DataBroker dataBroker;
-    private final ListenerRegistration<MessegeDataTreeChangeListener> listener;
+    private final ListenerRegistration<MessageDataTreeChangeListener> listener;
 
-    public MessegeDataTreeChangeListener(final DataBroker dataBroker) {
+    public MessageDataTreeChangeListener(final DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-        final DataTreeIdentifier<Messege> dataTreeIid =
-                new DataTreeIdentifier<>(LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessegeIid());
+        final DataTreeIdentifier<Message> dataTreeIid =
+                new DataTreeIdentifier<>(LogicalDatastoreType.CONFIGURATION, MessengerMdsalUtils.getMessageIid());
         listener = dataBroker.registerDataTreeChangeListener(dataTreeIid, this);
     }
 
     @Override
-    public void onDataTreeChanged(Collection<DataTreeModification<Messege>> changes) {
-        for (final DataTreeModification<Messege> change : changes) {
-            final InstanceIdentifier<Messege> identifier = change.getRootPath().getRootIdentifier();
-            final DataObjectModification<Messege> root = change.getRootNode();
+    public void onDataTreeChanged(Collection<DataTreeModification<Message>> changes) {
+        for (final DataTreeModification<Message> change : changes) {
+            final InstanceIdentifier<Message> identifier = change.getRootPath().getRootIdentifier();
+            final DataObjectModification<Message> root = change.getRootNode();
             switch (root.getModificationType()) {
                 case DELETE:
                     //To Do
@@ -57,10 +57,10 @@ public class MessegeDataTreeChangeListener implements DataTreeChangeListener<Mes
         }
     }
 
-    protected void add(InstanceIdentifier<Messege> identifier, Messege add) throws RuntimeException {
+    protected void add(InstanceIdentifier<Message> identifier, Message add) throws RuntimeException {
         MessengerMdsalUtils.put(dataBroker, LogicalDatastoreType.OPERATIONAL, identifier, add);
         final Messenger messenger = MessengerMdsalUtils.read(dataBroker, LogicalDatastoreType.OPERATIONAL, MessengerMdsalUtils.getMessengerIid());
-        final MessengerBuilder messengerBld = new MessengerBuilder(messenger).setLastMessegeDatetime(new Date().toString());
+        final MessengerBuilder messengerBld = new MessengerBuilder(messenger).setLastMessageDatetime(new Date().toString());
         MessengerMdsalUtils.merge(dataBroker, LogicalDatastoreType.OPERATIONAL, MessengerMdsalUtils.getMessengerIid(), messengerBld.build());
     }
 
