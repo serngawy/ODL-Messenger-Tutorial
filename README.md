@@ -134,7 +134,7 @@ for the messenger project.
 Now we will use yang to model our messenger. The main functionality of any messenger is to deliver messages
 between to persons/objects source and destination. In order to model the messenger we need to model the message
 as it is part of the messenger main functionality. Under the api module src/main/yang we have defined two yang models
-messenger.yang and messenger-rpc.yang let's go through them. At messenger.yang we model the message as grouping
+[messenger.yang](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/api/src/main/yang/messenger.yang) and [messenger-rpc.yang](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/api/src/main/yang/messenger-rpc.yang) let's go through them. At messenger.yang we model the message as grouping
 having the basic message attributes such as mess-id, message-source, message-dest and message-text.
 I didn't set the message datetime attribute to let you add it while you re-doing the tutorial by yourself.
 
@@ -301,8 +301,8 @@ https://wiki.opendaylight.org/view/YANG_Tools:Available_Models
 </pre>
 
 ## Implementation
-Initially when you build the messenger project the impl module will have the MessengerProvider class
-and impl-blueprint.xml file that define the MessengerProvider bean. The MessengerProvider class
+Initially when you build the messenger project the impl module will have the [MessengerProvider](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/impl/src/main/java/org/opendaylight/messenger/impl/MessengerProvider.java) class
+and [impl-blueprint.xml](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/impl/src/main/resources/org/opendaylight/blueprint/impl-blueprint.xml) file that define the MessengerProvider bean. The MessengerProvider class
 require the DataBroker interface as contracture argument. Via Databroker we can create, update
 and delete the messenger datatree in both Md-SAL datastores operational and config.
 
@@ -326,13 +326,13 @@ and delete the messenger datatree in both Md-SAL datastores operational and conf
 
 In our final implementation for the messenger project we have add three classes to help us
 apply the messenger business logic and functionalities.
-##### MessengerMdsalUtils: 
+##### [MessengerMdsalUtils](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/impl/src/main/java/org/opendaylight/messenger/impl/MessengerMdsalUtils.java): 
 MessengerMdsalUtils contains the CRUD methods that will help us read from and add to the messenger data tree at Md-SAL datastore
-##### MessageDataTreeChangeListener:
+##### [MessageDataTreeChangeListener](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/impl/src/main/java/org/opendaylight/messenger/impl/MessageDataTreeChangeListener.java):
 The DataBroker provides listeners to raise event when a specific datatree has been changed. In the MessageDataTreeChangeListener
 we listen to the created messages at the config datastore and add them to the operational datastore with updating the messenger
 last message datetime data.
-##### MessengerService:
+##### [MessengerService](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/impl/src/main/java/org/opendaylight/messenger/impl/MessengerService.java):
 MessengerService implement the MessengerRpcService interfcae and has the business logic of the messenger RPCs.
 
 We have modified the MessengerProvider and implement the MessengerListener interface to let the
@@ -403,7 +403,7 @@ public class MessengerProvider implements MessengerListener {
 
 ## Karaf CLI to notify the messenger
 Initially the CLI module has the test-command that takes -tA test Argument. We modified the
-test-command to notify the messenger change its status connected/disconnected. At the cli-blueprint.xml
+test-command to notify the messenger changes its status connected/disconnected. At the [cli-blueprint.xml](https://github.com/serngawy/ODL-Messenger-Tutorial/blob/master/messenger/cli/src/main/resources/org/opendaylight/blueprint/cli-blueprint.xml)
 we refer to the NotificationPublishService to be able to send a notification to the messenger based on
 the desired status we want.
 <pre>
