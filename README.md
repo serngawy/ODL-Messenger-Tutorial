@@ -38,10 +38,10 @@ Note each version of the archetype generates version numbers in pom.xml dependen
 
 Respond to the prompts (Please note that groupid and artifactid need to be all lower case):
 <pre>
-Define value for property 'groupId': : org.opendaylight.Messenger
-Define value for property 'artifactId': : Messenger
+Define value for property 'groupId': : org.opendaylight.messenger
+Define value for property 'artifactId': : messenger
 Define value for property 'version':  1.0-SNAPSHOT: : 0.1.0-SNAPSHOT
-Define value for property 'package':  org.opendaylight.Messenger: : 
+Define value for property 'package':  org.opendaylight.messenger: : 
 Define value for property 'classPrefix':  ${artifactId.substring(0,1).toUpperCase()}${artifactId.substring(1)}
 Define value for property 'copyright': : you/me/whatever
 </pre>
@@ -87,10 +87,10 @@ The ''pom.xml'' file works as aggregator and defines the parent project, and wil
     &lt;relativePath/>
   &lt;/parent>
 ...
-  &lt;groupId>org.opendaylight.Messenger&lt;/groupId>
-  &lt;artifactId>Messenger-aggregator&lt;/artifactId>
+  &lt;groupId>org.opendaylight.messenger&lt;/groupId>
+  &lt;artifactId>messenger-aggregator&lt;/artifactId>
   &lt;version>0.1.0-SNAPSHOT&lt;/version>
-  &lt;name>Messenger&lt;/name>
+  &lt;name>messenger&lt;/name>
   &lt;packaging>pom&lt;/packaging>
 ...
   &lt;modules>
