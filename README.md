@@ -22,19 +22,9 @@ The first we want to do is prepare the bundle structure, as such we will be usin
 create your project with the archetype by typing:
 
 <pre>
-mvn archetype:generate -DarchetypeGroupId=org.opendaylight.controller -DarchetypeArtifactId=opendaylight-startup-archetype \
--DarchetypeRepository=http://nexus.opendaylight.org/content/repositories/&lt;Snapshot-Type>/ \
--DarchetypeCatalog=http://nexus.opendaylight.org/content/repositories/&lt;Snapshot-Type>/archetype-catalog.xml \
--DarchetypeVersion=&lt;Archetype-Version>
+mvn archetype:generate -DarchetypeGroupId=org.opendaylight.archetypes -DarchetypeArtifactId=opendaylight-startup-archetype \
+-DarchetypeCatalog=remote -DarchetypeVersion=1.0.0-SNAPSHOT
 </pre>
-
-You need to enter the proper <Archetype-Version> and <Snapshot-Type> that depends on the ODL release you want to work in. for example:
-* For the current Master (Carbon) use Snapshot-Type='''opendaylight.snapshot''' Archetype-Version='''1.3.0-SNAPSHOT'''
-* For Boron "SR0" use Snapshot-Type='''opendaylight.release''' Archetype-Version='''1.2.0-Boron'''
-* For Boron SR1 use Archetype-Version='''opendaylight.release''' Archetype-Version='''1.2.1-Boron-SR1'''
-* For the Boron snapshot use Snapshot-Type='''opendaylight.snapshot''' Archetype-Version='''1.2.2-SNAPSHOT'''
-
-Note each version of the archetype generates version numbers in pom.xml dependencies for its intended ODL revision. 
 
 Respond to the prompts (Please note that groupid and artifactid need to be all lower case):
 <pre>
